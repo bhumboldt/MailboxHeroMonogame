@@ -8,12 +8,10 @@ using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MailboxHeroMono.GameState
 {
-    public class PlayGameState: BaseGameState
+    public class PlayGameState : BaseGameState
     {
         private const float MAILBOX_DISTANCE = 300f;
         private const int EXP_TO_LEVEL_UP = 256;
@@ -51,7 +49,7 @@ namespace MailboxHeroMono.GameState
         List<Mail> mails;
         List<Mailbox> mailBoxes;
 
-        public PlayGameState(GraphicsDevice graphicsDevice): base(graphicsDevice)
+        public PlayGameState(GraphicsDevice graphicsDevice) : base(graphicsDevice)
         {
         }
 
@@ -223,25 +221,21 @@ namespace MailboxHeroMono.GameState
         {
             var mailboxesToRemove = new List<Mailbox>();
 
+            foreach (var mail in mails)
+            {
+                if (mail.Position.X <= 0 || mail.Position.X + mailTexture.Width >= _graphicsDevice.Viewport.Width)
+                {
+                    GameOver();
+                }
+            }
+
             foreach (var mailbox in mailBoxes)
             {
                 mailbox.Update(gameTime);
                 var mailToRemove = new List<Mail>();
                 foreach (var mail in mails)
                 {
-                    if (mail.Position.X <= 0)
-                    {
-                        mailToRemove.Add(mail);
-                        canThrowLeft = true;
-                        GameOver();
-                    }
-                    else if (mail.Position.X + mailTexture.Width >= _graphicsDevice.Viewport.Width)
-                    {
-                        mailToRemove.Add(mail);
-                        canThrowRight = true;
-                        GameOver();
-                    }
-                    else if (mailbox.IntersectsWithMail(mail))
+                    if (mailbox.IntersectsWithMail(mail))
                     {
                         mailToRemove.Add(mail);
 
