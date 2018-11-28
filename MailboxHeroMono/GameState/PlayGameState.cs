@@ -1,5 +1,4 @@
-﻿using MailboxHeroMono.GameStates;
-using MailboxHeroMono.Models;
+﻿using MailboxHeroMono.Models;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -234,13 +233,13 @@ namespace MailboxHeroMono.GameState
                     {
                         mailToRemove.Add(mail);
                         canThrowLeft = true;
-                        System.Diagnostics.Debug.WriteLine("Game Over!");
+                        GameOver();
                     }
                     else if (mail.Position.X + mailTexture.Width >= _graphicsDevice.Viewport.Width)
                     {
                         mailToRemove.Add(mail);
                         canThrowRight = true;
-                        System.Diagnostics.Debug.WriteLine("Game Over!");
+                        GameOver();
                     }
                     else if (mailbox.IntersectsWithMail(mail))
                     {
@@ -256,7 +255,7 @@ namespace MailboxHeroMono.GameState
                 {
                     if (!mailbox.IsClosed)
                     {
-                        System.Diagnostics.Debug.WriteLine("Game Over!");
+                        GameOver();
                     }
                     mailboxesToRemove.Add(mailbox);
                 }
@@ -304,6 +303,12 @@ namespace MailboxHeroMono.GameState
             {
                 mailbox.CloseMailbox(leftMailboxClosed);
             }
+        }
+
+        private void GameOver()
+        {
+            backgroundMusicInstance.Stop();
+            GameStateManager.Instance.AddScreen(new GameOverState(_graphicsDevice, score));
         }
 
         private void AddLeftMailbox()

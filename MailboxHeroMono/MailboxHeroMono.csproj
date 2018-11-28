@@ -43,6 +43,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Constants\Constants.cs" />
+    <Compile Include="GameState\GameOverState.cs" />
     <Compile Include="GameState\MenuGameState.cs" />
     <Compile Include="MailboxHero.cs" />
     <Compile Include="GameState\BaseGameState.cs" />

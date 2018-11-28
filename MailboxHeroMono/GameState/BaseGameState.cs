@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MailboxHeroMono.GameStates
+namespace MailboxHeroMono.GameState
 {
     public abstract class BaseGameState: IGameState
     {

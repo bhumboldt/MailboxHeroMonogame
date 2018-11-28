@@ -1,5 +1,4 @@
-﻿using MailboxHeroMono.GameStates;
-using MailboxHeroMono.UI;
+﻿using MailboxHeroMono.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -13,9 +12,11 @@ namespace MailboxHeroMono.GameState
 {
     public class MenuGameState : BaseGameState
     {
+        Texture2D _logo;
         Texture2D _background;
         Texture2D _button;
         SpriteFont _font;
+        Vector2 _logoPosition;
 
         Button _playGameButton;
 
@@ -26,8 +27,10 @@ namespace MailboxHeroMono.GameState
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
+            spriteBatch.Draw(_background, new Vector2(0f, _graphicsDevice.Viewport.Height - _background.Height), Color.White);
+            spriteBatch.Draw(_logo, _logoPosition, Color.White);
             _playGameButton.Draw(spriteBatch);
-
+            
             spriteBatch.End();
         }
 
@@ -42,7 +45,10 @@ namespace MailboxHeroMono.GameState
             _button = content.Load<Texture2D>("button");
             _font = content.Load<SpriteFont>("font");
 
-            _playGameButton = new Button(_button, new Vector2(_graphicsDevice.Viewport.Width / 2f - _button.Width / 2f, _graphicsDevice.Viewport.Height / 2f - _button.Height / 2f), "Play Game", _font, PlayGameAction);
+            _logo = content.Load<Texture2D>("game_logo1");
+
+            _logoPosition = new Vector2(_graphicsDevice.Viewport.Width / 2f - _logo.Width / 2f, 5f);
+            _playGameButton = new Button(_button, new Vector2(_graphicsDevice.Viewport.Width / 2f - _button.Width / 2f, _logoPosition.Y + _logo.Height + 10f), "Play Game", _font, PlayGameAction);
         }
 
         public override void UnloadContent()
